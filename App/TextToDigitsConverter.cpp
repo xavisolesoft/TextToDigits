@@ -1,18 +1,51 @@
 #include "TextToDigitsConverter.hpp"
 
+#include "Token.hpp"
+
 TextToDigitsConverter::TextToDigitsConverter()
 {
 
 }
 
-int64_t TextToDigitsConverter::convert(const std::string& text) const
+std::string TextToDigitsConverter::replaceTextForDigits(const std::string& text) const
 {
-	int64_t digits = -1;
+	std::string replacedText;
+	int64_t previousValue = Token::INVALID_VALUE;
 
-	auto valueIter = tokenToValue.find(text);
-	if (valueIter != tokenToValue.end()) {
-		return valueIter->second;
+	for (const Token& token : parser.parse(text)) {
+		switch (token.getType())
+		{
+		case Token::Type::NOP:
+			if (previousValue != Token::INVALID_VALUE) {
+				appendReplacedText(replacedText, std::to_string(previousValue));
+			}
+			appendReplacedText(replacedText, token.getText());
+			break;
+		case Token::Type::VALUE:
+			if (previousValue == Token::INVALID_VALUE) {
+				previousValue = token.getValue();
+			}
+			else {
+				previousValue += token.getValue();
+			}
+			break;
+		case Token::Type::OPERATOR:
+			//TODO
+			;
+		}
 	}
 
-	return digits;
+	if (previousValue != Token::INVALID_VALUE) {
+		appendReplacedText(replacedText, std::to_string(previousValue));
+	}
+
+	return replacedText;
+}
+
+void TextToDigitsConverter::appendReplacedText(std::string& replacedText, const std::string& textToAppend)
+{
+	if (!replacedText.empty()) {
+		replacedText += " ";
+	}
+	replacedText += textToAppend;
 }

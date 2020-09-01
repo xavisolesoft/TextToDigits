@@ -14,8 +14,8 @@ int main()
 
 	TextToDigitsConverter textToDigitsConverter;
 	for (std::string outputLine, inputLine; std::getline(dataSetStream, outputLine, '\t') && std::getline(dataSetStream, inputLine, '\n'); ) {
-		int64_t textToDigits = textToDigitsConverter.convert(inputLine);
-		if (outputLine != std::to_string(textToDigits)) {
+		std::string textToDigits = textToDigitsConverter.replaceTextForDigits(inputLine);
+		if (outputLine != textToDigits) {
 			std::cout << "\u001b[31mERROR:\u001b[0m " << "\"" << inputLine << "\"" << " is " << textToDigits << " but should be " << outputLine << "." << std::endl;
 		}
 		std::cout << inputLine << "     " << outputLine << std::endl;

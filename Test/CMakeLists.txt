@@ -5,10 +5,14 @@ cmake_minimum_required (VERSION 3.8)
 
 file(GLOB HEADERS
     ../App/TextToDigitsConverter.hpp
+    ../App/Token.hpp
+    ../App/Parser.hpp
 )
 
 file(GLOB SOURCES
     ../App/TextToDigitsConverter.cpp
+    ../App/Token.cpp
+    ../App/Parser.cpp
 )
 
 add_executable (Test "main.cpp" ${HEADERS} ${SOURCES})

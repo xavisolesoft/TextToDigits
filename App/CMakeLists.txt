@@ -6,10 +6,14 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 file(GLOB HEADERS
     TextToDigitsConverter.hpp
+    Parser.hpp
+    Token.hpp
 )
 
 file(GLOB SOURCES
     TextToDigitsConverter.cpp
+    Parser.cpp
+    Token.cpp
 )
 
 add_executable (App "main.cpp" ${HEADERS} ${SOURCES})
