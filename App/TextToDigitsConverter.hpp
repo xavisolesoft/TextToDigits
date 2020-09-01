@@ -16,7 +16,7 @@ public:
 	std::string replaceTextForDigits(const std::string& text) const;
 
 private:
-	static void processNopToken(const Token& token, TextToDigitsConverterContext& context);
+	static void processNotANumberToken(const Token& token, TextToDigitsConverterContext& context);
 	static void processValueToken(const Token& token, TextToDigitsConverterContext& context);
 	static void processHyphenValueToken(const Token& token, TextToDigitsConverterContext& context);
 	static void processOperatorToken(const Token& token, TextToDigitsConverterContext& context);

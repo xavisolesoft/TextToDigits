@@ -35,6 +35,8 @@ private:
 
 	const std::unordered_map<std::string, int64_t> tokenToValue =
 	{
+		{"o", 0},
+		{"zero", 0},
 		{"one", 1},
 		{"two", 2},
 		{"three", 3},

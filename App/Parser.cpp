@@ -99,7 +99,7 @@ Parser::ExtractedToken Parser::tryExtractTokenNop(const std::string& word) const
 {
 	ExtractedToken res;
 
-	res.token.setType(Token::Type::NOP);
+	res.token.setType(Token::Type::NOT_A_NUMBER);
 	res.token.setValue(-1);
 	res.isExtracted = true;
 

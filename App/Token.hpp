@@ -8,10 +8,10 @@ class Token
 public:
 	enum class Type
 	{
-		NOP,
-		VALUE,
-		HYPHEN_VALUE,
-		OPERATOR
+		NOT_A_NUMBER, //Normal text without numbers
+		VALUE, //one, two, fifteen, fifty...
+		HYPHEN_VALUE, //-one, -two,... (needed to differentiate with phone number notation).
+		OPERATOR //hundred, thousand
 	};
 
 	static constexpr int64_t INVALID_VALUE = -1;
@@ -28,7 +28,7 @@ public:
 	void setText(std::string text);
 
 private:
-	Type _type = Type::NOP;
+	Type _type = Type::NOT_A_NUMBER;
 	int64_t _value = INVALID_VALUE;
 	std::string _text;
 };

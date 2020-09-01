@@ -17,8 +17,8 @@ std::string TextToDigitsConverter::replaceTextForDigits(const std::string& text)
 	for (const Token& token : parser.parse(text)) {
 		switch (token.getType())
 		{
-		case Token::Type::NOP:
-			processNopToken(token, context);
+		case Token::Type::NOT_A_NUMBER:
+			processNotANumberToken(token, context);
 			break;
 		case Token::Type::VALUE:
 			processValueToken(token, context);
@@ -38,7 +38,7 @@ std::string TextToDigitsConverter::replaceTextForDigits(const std::string& text)
 	return context.replacedText;
 }
 
-void TextToDigitsConverter::processNopToken(const Token& token, TextToDigitsConverterContext& context)
+void TextToDigitsConverter::processNotANumberToken(const Token& token, TextToDigitsConverterContext& context)
 {
 	appendPreviousValues(context);
 	appendReplacedTextWithSeparator(context.replacedText, token.getText());
@@ -55,7 +55,12 @@ void TextToDigitsConverter::processValueToken(const Token& token, TextToDigitsCo
 
 void TextToDigitsConverter::processHyphenValueToken(const Token& token, TextToDigitsConverterContext& context)
 {
-	context.previousValues.push_back(token.getValue());
+	if (token.getValue() < 10 && token.getValue() > 0) {
+		context.previousValues.push_back(token.getValue());
+	}
+	else {
+		processNotANumberToken(token, context);
+	}
 }
 
 void TextToDigitsConverter::processOperatorToken(const Token& token, TextToDigitsConverterContext& context)
