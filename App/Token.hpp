@@ -15,6 +15,7 @@ public:
 	};
 
 	static constexpr int64_t INVALID_VALUE = -1;
+	static const Token NULL_TOKEN;
 
 	Token();
 

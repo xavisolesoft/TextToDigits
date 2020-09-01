@@ -1,5 +1,7 @@
 #include "Token.hpp"
 
+const Token Token::NULL_TOKEN;
+
 Token::Token()
 {
 

@@ -30,7 +30,7 @@ std::string TextToDigitsConverter::replaceTextForDigits(const std::string& text)
 			processOperatorToken(token, context);
 		}
 
-		context.previousTokenType = token.getType();
+		context.previousToken = &token;
 	}
 
 	appendPreviousValues(context);
@@ -46,7 +46,7 @@ void TextToDigitsConverter::processNotANumberToken(const Token& token, TextToDig
 
 void TextToDigitsConverter::processValueToken(const Token& token, TextToDigitsConverterContext& context)
 {
-	if (context.previousTokenType == Token::Type::VALUE) {
+	if (context.previousToken->getType() == Token::Type::VALUE) {
 		appendPreviousValues(context);
 		context.concatenateWithPreviousNumber = true;
 	}
@@ -55,7 +55,7 @@ void TextToDigitsConverter::processValueToken(const Token& token, TextToDigitsCo
 
 void TextToDigitsConverter::processHyphenValueToken(const Token& token, TextToDigitsConverterContext& context)
 {
-	if (token.getValue() < 10 && token.getValue() > 0) {
+	if (token.getValue() < 10 && token.getValue() > 0 && context.previousToken->getType() == Token::Type::VALUE) {
 		context.previousValues.push_back(token.getValue());
 	}
 	else {
@@ -65,7 +65,7 @@ void TextToDigitsConverter::processHyphenValueToken(const Token& token, TextToDi
 
 void TextToDigitsConverter::processOperatorToken(const Token& token, TextToDigitsConverterContext& context)
 {
-	if ((context.previousTokenType == Token::Type::VALUE || context.previousTokenType == Token::Type::OPERATOR)
+	if ((context.previousToken->getType() == Token::Type::VALUE || context.previousToken->getType() == Token::Type::OPERATOR)
 		&& !context.previousValues.empty()) {
 		context.previousValues.back() *= token.getValue();
 	}
