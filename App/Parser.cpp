@@ -16,7 +16,7 @@ std::vector<Token> Parser::parse(const std::string& text) const
 
 	for (NextWord nextWord = getNextWord(text, pos); !nextWord.word.empty(); nextWord = getNextWord(text, pos)) {
 		std::string cleanWord = toCleanWord(nextWord.word);
-		ExtractedToken extractedToken = tryExtractTokenValue(cleanWord, nextWord.previousDelimiter);
+		ExtractedToken extractedToken = tryExtractTokenValue(cleanWord, nextWord.previousSeparator);
 
 		if (!extractedToken.isExtracted) {
 			extractedToken = tryExtractTokenOperation(cleanWord);
@@ -27,6 +27,7 @@ std::vector<Token> Parser::parse(const std::string& text) const
 		}
 
 		extractedToken.token.setText(std::move(nextWord.word));
+		extractedToken.token.setPreviousSeparator(nextWord.previousSeparator);
 
 		res.emplace_back(std::move(extractedToken.token));
 	}
@@ -38,34 +39,34 @@ Parser::NextWord Parser::getNextWord(const std::string& text, int& pos) const
 {
 	NextWord nextWord;
 
-	while (pos < text.size() && isDelimiter(text[pos])) {
+	while (pos < text.size() && isSeparator(text[pos])) {
 		++pos;
 	}
 
-	nextWord.previousDelimiter = ' ';
+	nextWord.previousSeparator = ' ';
 	if (pos > 0) {
-		nextWord.previousDelimiter = text[pos-1];
+		nextWord.previousSeparator = text[pos-1];
 	}
 
-	for (; pos < text.size() && !isDelimiter(text[pos]); ++pos) {
+	for (; pos < text.size() && !isSeparator(text[pos]); ++pos) {
 		nextWord.word.push_back(text[pos]);
 	}
 
 	return nextWord;
 }
 
-bool Parser::isDelimiter(char c)
+bool Parser::isSeparator(char c)
 {
 	return c == ' ' || c == '-';
 }
 
-Parser::ExtractedToken Parser::tryExtractTokenValue(const std::string& word, char previousDelimiter) const
+Parser::ExtractedToken Parser::tryExtractTokenValue(const std::string& word, char previousSeparator) const
 {
 	ExtractedToken res;
 
 	auto valueIter = tokenToValue.find(word);
 	if (valueIter != tokenToValue.end()) {
-		if (previousDelimiter == '-') {
+		if (previousSeparator == '-') {
 			res.token.setType(Token::Type::HYPHEN_VALUE);
 		}
 		else {

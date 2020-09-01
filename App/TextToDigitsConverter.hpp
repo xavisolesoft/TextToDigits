@@ -22,7 +22,7 @@ private:
 	static void processOperatorToken(const Token& token, TextToDigitsConverterContext& context);
 
 	static void appendPreviousValues(TextToDigitsConverterContext& context);
-	static void appendReplacedTextWithSeparator(std::string& replacedText, const std::string& textToAppend);
+	static void appendReplacedTextWithSeparator(std::string& replacedText, const std::string& textToAppend, char separator);
 
 private:
 	Parser parser;

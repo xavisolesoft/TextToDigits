@@ -17,19 +17,19 @@ public:
 private:
 	struct NextWord
 	{
-		char previousDelimiter = ' ';
+		char previousSeparator = ' ';
 		std::string word;
 
 	};
 	NextWord getNextWord(const std::string& text, int& pos) const;
-	static bool isDelimiter(char c);
+	static bool isSeparator(char c);
 
 	struct ExtractedToken
 	{
 		bool isExtracted = false;
 		Token token;
 	};
-	ExtractedToken tryExtractTokenValue(const std::string& word, char previousDelimiter) const;
+	ExtractedToken tryExtractTokenValue(const std::string& word, char previousSeparator) const;
 	ExtractedToken tryExtractTokenOperation(const std::string& word) const;
 	ExtractedToken tryExtractTokenNop(const std::string& word) const;
 

@@ -41,7 +41,7 @@ std::string TextToDigitsConverter::replaceTextForDigits(const std::string& text)
 void TextToDigitsConverter::processNotANumberToken(const Token& token, TextToDigitsConverterContext& context)
 {
 	appendPreviousValues(context);
-	appendReplacedTextWithSeparator(context.replacedText, token.getText());
+	appendReplacedTextWithSeparator(context.replacedText, token.getText(), token.getPreviousSeparator());
 }
 
 void TextToDigitsConverter::processValueToken(const Token& token, TextToDigitsConverterContext& context)
@@ -55,7 +55,9 @@ void TextToDigitsConverter::processValueToken(const Token& token, TextToDigitsCo
 
 void TextToDigitsConverter::processHyphenValueToken(const Token& token, TextToDigitsConverterContext& context)
 {
-	if (token.getValue() < 10 && token.getValue() > 0 && context.previousToken->getType() == Token::Type::VALUE) {
+	if (token.getValue() < 10 && token.getValue() > 0
+		&& context.previousToken->getType() == Token::Type::VALUE
+		&& context.previousToken->getValue() >= 20 && context.previousToken->getValue() <= 90) {
 		context.previousValues.push_back(token.getValue());
 	}
 	else {
@@ -66,7 +68,8 @@ void TextToDigitsConverter::processHyphenValueToken(const Token& token, TextToDi
 void TextToDigitsConverter::processOperatorToken(const Token& token, TextToDigitsConverterContext& context)
 {
 	if ((context.previousToken->getType() == Token::Type::VALUE || context.previousToken->getType() == Token::Type::OPERATOR)
-		&& !context.previousValues.empty()) {
+		&& !context.previousValues.empty()
+		&& token.getPreviousSeparator() == ' ') {
 		context.previousValues.back() *= token.getValue();
 	}
 	else {
@@ -82,17 +85,17 @@ void TextToDigitsConverter::appendPreviousValues(TextToDigitsConverterContext& c
 			context.replacedText += std::to_string(totalValue);
 		}
 		else {
-			appendReplacedTextWithSeparator(context.replacedText, std::to_string(totalValue));
+			appendReplacedTextWithSeparator(context.replacedText, std::to_string(totalValue), ' ');
 		}
 		context.previousValues.clear();
 		context.concatenateWithPreviousNumber = false;
 	}
 }
 
-void TextToDigitsConverter::appendReplacedTextWithSeparator(std::string& replacedText, const std::string& textToAppend)
+void TextToDigitsConverter::appendReplacedTextWithSeparator(std::string& replacedText, const std::string& textToAppend, char separator)
 {
 	if (!replacedText.empty()) {
-		replacedText += " ";
+		replacedText += separator;
 	}
 	replacedText += textToAppend;
 }

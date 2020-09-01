@@ -36,3 +36,13 @@ void Token::setText(std::string text)
 {
 	_text = std::move(text);
 }
+
+char Token::getPreviousSeparator() const
+{
+	return _previousSeparator;
+}
+
+void Token::setPreviousSeparator(char separator)
+{
+	_previousSeparator = separator;
+}

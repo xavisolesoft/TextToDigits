@@ -28,8 +28,12 @@ public:
 	const std::string& getText() const;
 	void setText(std::string text);
 
+	char getPreviousSeparator() const;
+	void setPreviousSeparator(char separator);
+
 private:
 	Type _type = Type::NOT_A_NUMBER;
 	int64_t _value = INVALID_VALUE;
 	std::string _text;
+	char _previousSeparator = '\0';
 };
