@@ -22,7 +22,7 @@ private:
 
 	};
 	NextWord getNextWord(const std::string& text, int& pos) const;
-	static bool isSeparator(char c);
+	static int getSeparatorSize(const std::string& text, int pos);
 
 	struct ExtractedToken
 	{

@@ -38,9 +38,9 @@ std::vector<Token> Parser::parse(const std::string& text) const
 Parser::NextWord Parser::getNextWord(const std::string& text, int& pos) const
 {
 	NextWord nextWord;
-
-	while (pos < text.size() && isSeparator(text[pos])) {
-		++pos;
+	
+	for (int separatorSize = 1; pos < text.size() && separatorSize > 0; pos += separatorSize) {
+		separatorSize = getSeparatorSize(text, pos);
 	}
 
 	nextWord.previousSeparator = ' ';
@@ -48,16 +48,26 @@ Parser::NextWord Parser::getNextWord(const std::string& text, int& pos) const
 		nextWord.previousSeparator = text[pos-1];
 	}
 
-	for (; pos < text.size() && !isSeparator(text[pos]); ++pos) {
+	for (; pos < text.size() && getSeparatorSize(text, pos) == 0; ++pos) {
 		nextWord.word.push_back(text[pos]);
 	}
 
 	return nextWord;
 }
 
-bool Parser::isSeparator(char c)
+int Parser::getSeparatorSize(const std::string& text, int pos)
 {
-	return c == ' ' || c == '-';
+	constexpr auto AND_SEPARATOR = " and";
+	const int AND_SIZE = std::strlen(AND_SEPARATOR);
+	
+	if (text.size() >= pos + AND_SIZE && text.substr(pos, AND_SIZE) == AND_SEPARATOR) {
+		return AND_SIZE;
+	}
+	else if (text[pos] == ' ' || text[pos] == '-' || text[pos] == ',') {
+		return 1;
+	}
+
+	return 0;
 }
 
 Parser::ExtractedToken Parser::tryExtractTokenValue(const std::string& word, char previousSeparator) const
