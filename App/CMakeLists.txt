@@ -8,11 +8,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 file(GLOB HEADERS
-    ../App/TextToDigitsConverter.hpp
+    TextToDigitsConverter.hpp
 )
 
 file(GLOB SOURCES
-    ../App/TextToDigitsConverter.cpp
+    TextToDigitsConverter.cpp
 )
 
 # Add source to this project's executable.

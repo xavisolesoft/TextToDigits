@@ -4,15 +4,17 @@
 cmake_minimum_required (VERSION 3.8)
 
 file(GLOB HEADERS
-    TextToDigitsConverter.hpp
+    ../App/TextToDigitsConverter.hpp
 )
 
 file(GLOB SOURCES
-    TextToDigitsConverter.cpp
+    ../App/TextToDigitsConverter.cpp
 )
 
 # Add source to this project's executable.
 add_executable (Test "main.cpp" ${HEADERS} ${SOURCES})
+
+include_directories(../App)
 
 add_custom_command(
         TARGET Test POST_BUILD
