@@ -33,6 +33,8 @@ private:
 	ExtractedToken tryExtractTokenOperation(const std::string& word) const;
 	ExtractedToken tryExtractTokenNop(const std::string& word) const;
 
+	static std::string toCleanWord(const std::string& word);
+
 	const std::unordered_map<std::string, int64_t> tokenToValue =
 	{
 		{"o", 0},

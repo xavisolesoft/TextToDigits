@@ -1,6 +1,8 @@
 #include "Parser.hpp"
 
 #include <sstream>
+#include <cctype>
+
 
 Parser::Parser()
 {
@@ -13,14 +15,15 @@ std::vector<Token> Parser::parse(const std::string& text) const
 	int pos = 0;
 
 	for (NextWord nextWord = getNextWord(text, pos); !nextWord.word.empty(); nextWord = getNextWord(text, pos)) {
-		ExtractedToken extractedToken = tryExtractTokenValue(nextWord.word, nextWord.previousDelimiter);
+		std::string cleanWord = toCleanWord(nextWord.word);
+		ExtractedToken extractedToken = tryExtractTokenValue(cleanWord, nextWord.previousDelimiter);
 
 		if (!extractedToken.isExtracted) {
-			extractedToken = tryExtractTokenOperation(nextWord.word);
+			extractedToken = tryExtractTokenOperation(cleanWord);
 		}
 
 		if (!extractedToken.isExtracted) {
-			extractedToken = tryExtractTokenNop(nextWord.word);
+			extractedToken = tryExtractTokenNop(cleanWord);
 		}
 
 		extractedToken.token.setText(std::move(nextWord.word));
@@ -104,4 +107,16 @@ Parser::ExtractedToken Parser::tryExtractTokenNop(const std::string& word) const
 	res.isExtracted = true;
 
 	return res;
+}
+
+std::string Parser::toCleanWord(const std::string& word)
+{
+	if (word.empty()) {
+		return word;
+	}
+	else {
+		std::string cleanedWord = word;
+		cleanedWord[0] = static_cast<char>(std::tolower(word[0]));
+		return cleanedWord;
+	}
 }
