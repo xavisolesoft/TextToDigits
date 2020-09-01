@@ -18,21 +18,16 @@ std::string TextToDigitsConverter::replaceTextForDigits(const std::string& text)
 		switch (token.getType())
 		{
 		case Token::Type::NOP:
-			appendPreviousValues(context);
-			appendReplacedTextWithSeparator(context.replacedText, token.getText());
+			processNopToken(token, context);
 			break;
 		case Token::Type::VALUE:
-			if (context.previousTokenType == Token::Type::VALUE) {
-				appendPreviousValues(context);
-				context.concatenateWithPreviousNumber = true;
-			}
-			context.previousValues.push_back(token.getValue());
+			processValueToken(token, context);
 			break;
 		case Token::Type::HYPHEN_VALUE:
-			context.previousValues.push_back(token.getValue());
+			processHyphenValueToken(token, context);
 			break;
 		case Token::Type::OPERATOR:
-			context.previousValues.back() *= token.getValue();
+			processOperatorToken(token, context);
 		}
 
 		context.previousTokenType = token.getType();
@@ -41,6 +36,31 @@ std::string TextToDigitsConverter::replaceTextForDigits(const std::string& text)
 	appendPreviousValues(context);
 
 	return context.replacedText;
+}
+
+void TextToDigitsConverter::processNopToken(const Token& token, TextToDigitsConverterContext& context)
+{
+	appendPreviousValues(context);
+	appendReplacedTextWithSeparator(context.replacedText, token.getText());
+}
+
+void TextToDigitsConverter::processValueToken(const Token& token, TextToDigitsConverterContext& context)
+{
+	if (context.previousTokenType == Token::Type::VALUE) {
+		appendPreviousValues(context);
+		context.concatenateWithPreviousNumber = true;
+	}
+	context.previousValues.push_back(token.getValue());
+}
+
+void TextToDigitsConverter::processHyphenValueToken(const Token& token, TextToDigitsConverterContext& context)
+{
+	context.previousValues.push_back(token.getValue());
+}
+
+void TextToDigitsConverter::processOperatorToken(const Token& token, TextToDigitsConverterContext& context)
+{
+	context.previousValues.back() *= token.getValue();
 }
 
 void TextToDigitsConverter::appendPreviousValues(TextToDigitsConverterContext& context)
