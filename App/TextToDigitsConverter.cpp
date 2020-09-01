@@ -1,5 +1,7 @@
 #include "TextToDigitsConverter.hpp"
 
+#include <numeric>
+
 #include "Token.hpp"
 
 TextToDigitsConverter::TextToDigitsConverter()
@@ -10,33 +12,29 @@ TextToDigitsConverter::TextToDigitsConverter()
 std::string TextToDigitsConverter::replaceTextForDigits(const std::string& text) const
 {
 	std::string replacedText;
-	int64_t previousValue = Token::INVALID_VALUE;
+	std::vector<int64_t> previousValues;
 
 	for (const Token& token : parser.parse(text)) {
 		switch (token.getType())
 		{
 		case Token::Type::NOP:
-			if (previousValue != Token::INVALID_VALUE) {
-				appendReplacedText(replacedText, std::to_string(previousValue));
+			if (!previousValues.empty()) {
+				int64_t totalValue = std::accumulate(previousValues.begin(), previousValues.end(), 0);
+				appendReplacedText(replacedText, std::to_string(totalValue));
 			}
 			appendReplacedText(replacedText, token.getText());
 			break;
 		case Token::Type::VALUE:
-			if (previousValue == Token::INVALID_VALUE) {
-				previousValue = token.getValue();
-			}
-			else {
-				previousValue += token.getValue();
-			}
+			previousValues.push_back(token.getValue());
 			break;
 		case Token::Type::OPERATOR:
-			//TODO
-			;
+			previousValues.back() *= token.getValue();
 		}
 	}
 
-	if (previousValue != Token::INVALID_VALUE) {
-		appendReplacedText(replacedText, std::to_string(previousValue));
+	if (!previousValues.empty()) {
+		int64_t totalValue = std::accumulate(previousValues.begin(), previousValues.end(), 0);
+		appendReplacedText(replacedText, std::to_string(totalValue));
 	}
 
 	return replacedText;

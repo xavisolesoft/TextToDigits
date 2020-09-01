@@ -38,6 +38,7 @@
 100	one hundred
 500	five hundred
 1000	one thousand
-1500	one thousand five hundred, or fifteen hundred
+1500	one thousand five hundred
+1500	fifteen hundred
 100000	one hundred thousand
 1000000	one million
