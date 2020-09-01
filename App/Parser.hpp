@@ -17,7 +17,7 @@ public:
 private:
 	struct NextWord
 	{
-		char previousDelimiter;
+		char previousDelimiter = ' ';
 		std::string word;
 
 	};
