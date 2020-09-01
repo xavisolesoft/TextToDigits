@@ -6,6 +6,7 @@
 
 #include "Parser.hpp"
 
+class TextToDigitsConverterContext;
 
 class TextToDigitsConverter
 {
@@ -15,7 +16,8 @@ public:
 	std::string replaceTextForDigits(const std::string& text) const;
 
 private:
-	static void appendReplacedText(std::string& replacedText, const std::string& textToAppend);
+	static void appendPreviousValues(TextToDigitsConverterContext& context);
+	static void appendReplacedTextWithSeparator(std::string& replacedText, const std::string& textToAppend);
 
 private:
 	Parser parser;

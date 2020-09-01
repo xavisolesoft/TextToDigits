@@ -10,6 +10,7 @@ public:
 	{
 		NOP,
 		VALUE,
+		HYPHEN_VALUE,
 		OPERATOR
 	};
 

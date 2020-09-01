@@ -7,6 +7,7 @@ file(GLOB HEADERS
     ../App/TextToDigitsConverter.hpp
     ../App/Token.hpp
     ../App/Parser.hpp
+    ../App/TextToDigitsConverterContext.hpp
 )
 
 file(GLOB SOURCES

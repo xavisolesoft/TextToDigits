@@ -15,7 +15,13 @@ public:
 	std::vector<Token> parse(const std::string& text) const;
 
 private:
-	std::string getNextWord(const std::string& text, int& pos) const;
+	struct NextWord
+	{
+		char previousDelimiter;
+		std::string word;
+
+	};
+	NextWord getNextWord(const std::string& text, int& pos) const;
 	static bool isDelimiter(char c);
 
 	struct ExtractedToken
@@ -23,7 +29,7 @@ private:
 		bool isExtracted = false;
 		Token token;
 	};
-	ExtractedToken tryExtractTokenValue(const std::string& word) const;
+	ExtractedToken tryExtractTokenValue(const std::string& word, char previousDelimiter) const;
 	ExtractedToken tryExtractTokenOperation(const std::string& word) const;
 	ExtractedToken tryExtractTokenNop(const std::string& word) const;
 
