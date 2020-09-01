@@ -65,7 +65,13 @@ void TextToDigitsConverter::processHyphenValueToken(const Token& token, TextToDi
 
 void TextToDigitsConverter::processOperatorToken(const Token& token, TextToDigitsConverterContext& context)
 {
-	context.previousValues.back() *= token.getValue();
+	if ((context.previousTokenType == Token::Type::VALUE || context.previousTokenType == Token::Type::OPERATOR)
+		&& !context.previousValues.empty()) {
+		context.previousValues.back() *= token.getValue();
+	}
+	else {
+		processNotANumberToken(token, context);
+	}
 }
 
 void TextToDigitsConverter::appendPreviousValues(TextToDigitsConverterContext& context)

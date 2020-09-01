@@ -44,7 +44,10 @@
 1500	fifteen hundred
 100000	one hundred thousand
 1000000	one million
+1000000	one billion
 I have 2 brothers. There are 31 days in January.	I have two brothers. There are thirty-one days in January.
 I am 33 years old. My sister is 27 years old.	I am thirty-three years old. My sister is twenty-seven years old.
 She was born in 1975 (1975).	She was born in nineteen seventy-five (1975).
 20 nineteen	twenty-nineteen
+hundred	hundred
+hundred thousand	hundred thousand
