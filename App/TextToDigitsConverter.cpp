@@ -72,14 +72,14 @@ void TextToDigitsConverter::processOperatorToken(const Token& token, TextToDigit
 			|| context.previousToken->getType() == Token::Type::HYPHEN_VALUE)
 		&& !context.previousValues.empty()
 		&& token.getPreviousSeparator() == ' ') {
-		if (token.getValue() > context.previousValues.back()) {
-			int64_t sum = 0;
-			while (!context.previousValues.empty() && token.getValue() > context.previousValues.back()) {
-				sum += context.previousValues.back();
-				context.previousValues.pop_back();
+			if (token.getValue() > context.previousValues.back()) {
+				int64_t sum = 0;
+				while (!context.previousValues.empty() && token.getValue() > context.previousValues.back()) {
+					sum += context.previousValues.back();
+					context.previousValues.pop_back();
+				}
+				context.previousValues.push_back(sum);
 			}
-			context.previousValues.push_back(sum);
-		}
 		context.previousValues.back() *= token.getValue();
 	}
 	else {
