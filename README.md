@@ -99,8 +99,8 @@ Then you will need to open the solution "{REPO_DIR}/build_windows\TextToDigits.s
 From {REPO_DIR}/build_windows:
 
 ```bash
-cd App
-./App
+cd App\Debug
+App.exe
 ```
 
 #### Run Tests
@@ -108,6 +108,6 @@ cd App
 From {REPO_DIR}/build_windows:
 
 ```bash
-cd Test
-./Test
+cd Test\Debug
+Test.exe
 ```
