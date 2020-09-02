@@ -26,8 +26,13 @@ Executable that converts written numbers in words to digits in the middle of a p
 
 ## Test
 
-- Text conversion functionality is tested by the *Test* subproject implemented module as UniTest and run for the platforms described in the next section.
+- Text conversion functionality is tested by the *Test* subproject implemented module as UnitTest and run for the platforms described in the next section. You can find all the test inputs and outputs in hardcoded in [Test/main.cpp:testDataSet](Test/main.cpp).
+
+  ![Test Subproject Output](Documentation/TestOutput.png)
+
 - Command line interface functionality is tested manually in all platforms described in the next section due is very simple for now.
+
+![App Output](Documentation/AppOutput.png)
 
 ## Platforms
 

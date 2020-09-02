@@ -86,13 +86,27 @@ int main()
 	};
 
 	TextToDigitsConverter textToDigitsConverter;
+	int failingTestCount = 0;
+	int passingTestCount = 0;
 	for (const TestInfo& testInfo: testDataSet) {
 		std::string textToDigits = textToDigitsConverter.replaceTextForDigits(testInfo.input);
 		if (testInfo.output != textToDigits) {
 			std::cout << "\u001b[31mERROR:\u001b[0m " << "\"" << testInfo.input << "\"" << " is " << "\"" << textToDigits
 				<< "\"" << " but should be " << "\"" << testInfo.output << "\"" << "." << std::endl;
+			
+			++failingTestCount;
+		}
+		else {
+			++passingTestCount;
 		}
 		std::cout << testInfo.input << "     " << testInfo.output << std::endl;
+	}
+
+	if (failingTestCount == 0) {
+		std::cout << "\u001b[32mCongratulaions!!! :) All tests passed (" << passingTestCount << "/" << passingTestCount << ").\u001b[0m" << std::endl;
+	}
+	else {
+		std::cout << "\u001b[31mUnfortunatilly " << failingTestCount << "failed!!! :( (" << passingTestCount << "/" << passingTestCount << ").\u001b[0m" << std::endl;
 	}
 	
 	return 0;
