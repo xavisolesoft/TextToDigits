@@ -13,7 +13,7 @@ int main()
 	}
 
 	TextToDigitsConverter textToDigitsConverter;
-	for (std::string outputLine, inputLine; std::getline(dataSetStream, outputLine, '\t') && std::getline(dataSetStream, inputLine, '\n'); ) {
+	for (std::string outputLine, inputLine; std::getline(dataSetStream, outputLine, '>') && std::getline(dataSetStream, inputLine); ) {
 		std::string textToDigits = textToDigitsConverter.replaceTextForDigits(inputLine);
 		if (outputLine != textToDigits) {
 			std::cout << "\u001b[31mERROR:\u001b[0m " << "\"" << inputLine << "\"" << " is " << "\"" << textToDigits

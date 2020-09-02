@@ -1,2 +1,4 @@
 out/*
+out_ubuntu/*
+out_wincmake/*
 .vs/*

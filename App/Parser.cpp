@@ -2,7 +2,7 @@
 
 #include <sstream>
 #include <cctype>
-
+#include <cstring>
 
 Parser::Parser()
 {
