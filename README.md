@@ -6,8 +6,8 @@ Executable that converts written numbers in words to digits in the middle of a p
 
 ### Examples
 
-- If the input is ‘one hundred and one’, the output should be ‘101’.
-- If the input is ‘I have one hundred apples’ the output should be ‘I have 100 apples’.
+- If the input is "one hundred and one", the output should be "10"’.
+- If the input is "I have one hundred apples" the output should be "I have 100 apples".
 
 ### Rules
 
@@ -33,12 +33,76 @@ Executable that converts written numbers in words to digits in the middle of a p
 
 ### Compliance
 
-- CMake 3.8 or higher
-- C++ 14 Standard Compliant
+- CMake 3.8 or higher.
+- C++ 14 Standard Compliant.
 
 ### Tested platforms
 
-- Tested on Windows 10 with Vistual Studio 16 (2019) and Visual Studio 2019 CMake (3.8)
-- Tested on Windows 10 with Vistual Studio 16 (2019) and CMake 3.18.2
-- Tested on Ubuntu 16.04 g++ 5.5.0 and CMake 3.18.2
+- Tested on Windows 10 with Visual Studio 16 (2019) and Visual Studio 2019 CMake (3.8).
+- Tested on Windows 10 with Visual Studio 16 (2019) and CMake 3.18.2.
+- Tested on Ubuntu 16.04 g++ 5.5.0 and CMake 3.18.2.
 
+## How to build and run
+
+### Linux
+
+#### Build
+
+From {REPO_DIR}:
+
+```bash
+mkdir build_linux
+cd build_linux
+cmake ..
+make
+```
+
+#### Run Application
+
+From {REPO_DIR}/build_linux:
+
+```bash
+cd App
+./App
+```
+
+#### Run Tests
+
+From {REPO_DIR}/build_linux:
+
+```bash
+cd Test
+./Test
+```
+
+### Windows
+
+#### Build
+
+From {REPO_DIR}:
+
+```bash
+mkdir build_windows
+cd build_windows
+cmake ..
+```
+
+Then you will need to open the solution "{REPO_DIR}/build_windows\TextToDigits.sln" using Visual Studio and compile all.
+
+#### Run Application
+
+From {REPO_DIR}/build_windows:
+
+```bash
+cd App
+./App
+```
+
+#### Run Tests
+
+From {REPO_DIR}/build_windows:
+
+```bash
+cd Test
+./Test
+```
