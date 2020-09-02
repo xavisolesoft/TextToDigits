@@ -46,7 +46,7 @@ void TextToDigitsConverter::processNotANumberToken(const Token& token, TextToDig
 
 void TextToDigitsConverter::processValueToken(const Token& token, TextToDigitsConverterContext& context)
 {
-	if (context.previousToken->getType() == Token::Type::VALUE) {
+	if (context.previousToken->getType() == Token::Type::VALUE || context.previousToken->getType() == Token::Type::HYPHEN_VALUE) {
 		appendPreviousValues(context);
 		context.concatenateWithPreviousNumber = true;
 	}
@@ -58,7 +58,7 @@ void TextToDigitsConverter::processHyphenValueToken(const Token& token, TextToDi
 	if (token.getValue() < 10 && token.getValue() > 0
 		&& context.previousToken->getType() == Token::Type::VALUE
 		&& context.previousToken->getValue() >= 20 && context.previousToken->getValue() <= 90) {
-		context.previousValues.push_back(token.getValue());
+		context.previousValues.back() += token.getValue();
 	}
 	else {
 		processNotANumberToken(token, context);
@@ -67,9 +67,19 @@ void TextToDigitsConverter::processHyphenValueToken(const Token& token, TextToDi
 
 void TextToDigitsConverter::processOperatorToken(const Token& token, TextToDigitsConverterContext& context)
 {
-	if ((context.previousToken->getType() == Token::Type::VALUE || context.previousToken->getType() == Token::Type::OPERATOR)
+	if ((context.previousToken->getType() == Token::Type::VALUE
+			|| context.previousToken->getType() == Token::Type::OPERATOR
+			|| context.previousToken->getType() == Token::Type::HYPHEN_VALUE)
 		&& !context.previousValues.empty()
 		&& token.getPreviousSeparator() == ' ') {
+		if (token.getValue() > context.previousValues.back()) {
+			int64_t sum = 0;
+			while (!context.previousValues.empty() && token.getValue() > context.previousValues.back()) {
+				sum += context.previousValues.back();
+				context.previousValues.pop_back();
+			}
+			context.previousValues.push_back(sum);
+		}
 		context.previousValues.back() *= token.getValue();
 	}
 	else {
@@ -80,7 +90,7 @@ void TextToDigitsConverter::processOperatorToken(const Token& token, TextToDigit
 void TextToDigitsConverter::appendPreviousValues(TextToDigitsConverterContext& context)
 {
 	if (!context.previousValues.empty()) {
-		int64_t totalValue = std::accumulate(context.previousValues.begin(), context.previousValues.end(), 0);
+		int64_t totalValue = std::accumulate(context.previousValues.begin(), context.previousValues.end(), (int64_t)0);
 		if (context.concatenateWithPreviousNumber) {
 			context.replacedText += std::to_string(totalValue);
 		}

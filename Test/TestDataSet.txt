@@ -60,3 +60,10 @@ hundred thousand	hundred thousand
 60-zero	sixty-zero
 hundred-two	hundred-two
 2-hundred	two-hundred
+2340	two three forty
+27031	twenty-seven O thirty-one
+198768909	one hundred ninety-eight million seven hundred sixty-eight thousand nine hundred nine
+934798343070	nine hundred thirty-four billion seven hundred ninety-eight million three hundred forty-three thousand seventy
+934000000007 good morning hundred 98343070	nine hundred thirty-four billion seven good morning hundred ninety-eight million three hundred forty-three thousand seventy
+93400000000798343070	nine hundred thirty-four billion seven O hundred ninety-eight million three hundred forty-three thousand seventy
+347297294739	three hundred forty-seven billion two hundred ninety-seven million two hundred ninety-four thousand seven hundred thirty-nine
