@@ -30,7 +30,7 @@ private:
 		Token token;
 	};
 	ExtractedToken tryExtractTokenValue(const std::string& word, char previousSeparator) const;
-	ExtractedToken tryExtractTokenOperation(const std::string& word) const;
+	ExtractedToken tryExtractTokenOperation(const std::string& word, Token* previousToken) const;
 	ExtractedToken tryExtractTokenNop(const std::string& word) const;
 
 	static std::string toCleanWord(const std::string& word);

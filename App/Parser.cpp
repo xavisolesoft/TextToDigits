@@ -13,13 +13,14 @@ std::vector<Token> Parser::parse(const std::string& text) const
 {
 	std::vector<Token> res;
 	int pos = 0;
+	Token* previousToken = nullptr;
 
 	for (NextWord nextWord = getNextWord(text, pos); !nextWord.word.empty(); nextWord = getNextWord(text, pos)) {
 		std::string cleanWord = toCleanWord(nextWord.word);
 		ExtractedToken extractedToken = tryExtractTokenValue(cleanWord, nextWord.previousSeparator);
 
 		if (!extractedToken.isExtracted) {
-			extractedToken = tryExtractTokenOperation(cleanWord);
+			extractedToken = tryExtractTokenOperation(cleanWord, previousToken);
 		}
 
 		if (!extractedToken.isExtracted) {
@@ -30,6 +31,7 @@ std::vector<Token> Parser::parse(const std::string& text) const
 		extractedToken.token.setPreviousSeparator(nextWord.previousSeparator);
 
 		res.emplace_back(std::move(extractedToken.token));
+		previousToken = &res.back();
 	}
 
 	return res;
@@ -92,7 +94,7 @@ Parser::ExtractedToken Parser::tryExtractTokenValue(const std::string& word, cha
 	return res;
 }
 
-Parser::ExtractedToken Parser::tryExtractTokenOperation(const std::string& word) const
+Parser::ExtractedToken Parser::tryExtractTokenOperation(const std::string& word, Token* previousToken) const
 {
 	ExtractedToken res;
 
@@ -101,10 +103,16 @@ Parser::ExtractedToken Parser::tryExtractTokenOperation(const std::string& word)
 		res.token.setType(Token::Type::OPERATOR);
 		res.token.setValue(valueIter->second);
 		res.isExtracted = true;
+
+		if (previousToken && toCleanWord(previousToken->getText()) == "a") {
+			previousToken->setType(Token::Type::VALUE);
+			previousToken->setValue(1);
+		}
 	}
 	else {
 		res.isExtracted = false;
 	}
+
 
 	return res;
 }

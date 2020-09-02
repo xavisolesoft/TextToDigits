@@ -67,3 +67,9 @@ hundred-two>hundred-two
 934000000007 good morning hundred 98343070>nine hundred thirty-four billion seven good morning hundred ninety-eight million three hundred forty-three thousand seventy
 93400000000798343070>nine hundred thirty-four billion seven O hundred ninety-eight million three hundred forty-three thousand seventy
 347297294739>three hundred forty-seven billion two hundred ninety-seven million two hundred ninety-four thousand seven hundred thirty-nine
+100>A hundred
+1000>a thousand
+1000000>a million
+1000000000>a billion
+a 3>a three
+20-a>twenty-a
