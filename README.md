@@ -29,7 +29,7 @@ Executable that converts written numbers in words to digits in the middle of a p
 - Text conversion functionality is tested by the *Test* subproject implemented module as UniTest and run for the platforms described in the next section.
 - Command line interface functionality is tested manually in all platforms described in the next section due is very simple for now.
 
-##Platforms
+## Platforms
 
 ### Compliance
 
