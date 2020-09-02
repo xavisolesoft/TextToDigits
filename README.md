@@ -6,7 +6,7 @@ Executable that converts written numbers in words to digits in the middle of a p
 
 ### Examples
 
-- If the input is "one hundred and one", the output should be "10"’.
+- If the input is "one hundred and one", the output should be "10".
 - If the input is "I have one hundred apples" the output should be "I have 100 apples".
 
 ### Rules
@@ -43,7 +43,7 @@ Executable that converts written numbers in words to digits in the middle of a p
 
 ### Tested platforms
 
-- Tested on Windows 10 with Visual Studio 16 (2019) and Visual Studio 2019 CMake (3.8).
+- Tested on Windows 10 with Visual Studio 16 (2019) and Visual Studio 2019 Tools for CMake 1.0.
 - Tested on Windows 10 with Visual Studio 16 (2019) and CMake 3.18.2.
 - Tested on Ubuntu 16.04 g++ 5.5.0 and CMake 3.18.2.
 
